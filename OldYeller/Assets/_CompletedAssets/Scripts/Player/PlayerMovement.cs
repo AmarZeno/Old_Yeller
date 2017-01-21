@@ -6,7 +6,7 @@ namespace CompleteProject
 {
     public class PlayerMovement : MonoBehaviour
     {
-        public float speed = 6f;            // The speed that the player will move at.
+        float controllerSpeed = 20;            // The controllerSpeed that the player will move at.
 
         static int score = 0;
         Text scoreText;
@@ -25,7 +25,7 @@ namespace CompleteProject
             // Create a layer mask for the floor layer.
             floorMask = LayerMask.GetMask ("Floor");
 #endif
-            scoreText = GameObject.Find("ScoreText").GetComponent<Text>();
+            //scoreText = GameObject.Find("ScoreText").GetComponent<Text>();
             // Set up references.
             anim = GetComponent <Animator> ();
             playerRigidbody = GetComponent <Rigidbody> ();
@@ -35,17 +35,17 @@ namespace CompleteProject
         void FixedUpdate ()
         {           
             // Store the input axes.
-            float h = CrossPlatformInputManager.GetAxisRaw("Horizontal");
-            float v = CrossPlatformInputManager.GetAxisRaw("Vertical");
+            //float h = CrossPlatformInputManager.GetAxisRaw("Horizontal");
+            //float v = CrossPlatformInputManager.GetAxisRaw("Vertical");
 
             // Move the player around the scene.
-            Move (h, v);
+            //Move (h, v);
 
             // Turn the player to face the mouse cursor.
-            Turning ();
+            //Turning ();
 
             // Animate the player.
-            Animating (h, v);
+            //Animating (h, v);
 
             // Xbox one controller input
             JoystickInput();
@@ -58,7 +58,7 @@ namespace CompleteProject
             movement.Set (h, 0f, v);
             
             // Normalise the movement vector and make it proportional to the speed per second.
-            movement = movement.normalized * speed * Time.deltaTime;
+            movement = movement.normalized * controllerSpeed * Time.deltaTime;
 
             // Move the player to it's current position plus the movement.
             playerRigidbody.MovePosition (transform.position + movement);
@@ -68,7 +68,7 @@ namespace CompleteProject
        public void UpdateScore()
         {
             score++;
-            scoreText.text = "Score: " + score;
+            //scoreText.text = "Score: " + score;
         }
 
         void Turning ()
@@ -126,14 +126,15 @@ namespace CompleteProject
             anim.SetBool ("IsWalking", walking);
         }
 
-        void JoystickInput() {
+        void JoystickInput()
+        {
             if (InputManager.MainHorizontal() < -0.5f)
             {
-                transform.Translate(Vector3.back * Time.deltaTime * speed);
+                transform.Translate(Vector3.back * Time.deltaTime * controllerSpeed);
             }
             else if (InputManager.MainHorizontal() > 0.5f)
             {
-                transform.Translate(Vector3.forward * Time.deltaTime * speed);
+                transform.Translate(Vector3.forward * Time.deltaTime * controllerSpeed);
             }
             else
             {
@@ -142,11 +143,11 @@ namespace CompleteProject
 
             if (InputManager.MainVertical() < -0.5f)
             {
-                transform.Translate(Vector3.left * Time.deltaTime * speed);
+                transform.Translate(Vector3.left * Time.deltaTime * controllerSpeed);
             }
             else if (InputManager.MainVertical() > 0.5f)
             {
-                transform.Translate(Vector3.right * Time.deltaTime * speed);
+                transform.Translate(Vector3.right * Time.deltaTime * controllerSpeed);
             }
             else
             {
