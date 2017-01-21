@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEngine.UI;
 
+
 namespace CompleteProject
 {
     public class EnemyMovement : MonoBehaviour
@@ -40,6 +41,7 @@ namespace CompleteProject
             {
                 if(!inContact)
                 {
+                    this.GetComponent<Movement>().enabled = false;
                     GameObject go = GameObject.FindWithTag("Player");
                     go.GetComponent<PlayerMovement>().UpdateScore();
                 }
