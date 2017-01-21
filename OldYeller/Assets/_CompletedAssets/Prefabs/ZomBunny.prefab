@@ -34,7 +34,7 @@ GameObject:
   - 114: {fileID: 114000012472012318}
   m_Layer: 9
   m_Name: ZomBunny
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -110,7 +110,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100002}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.257372, y: 0.51, z: -11.763706}
+  m_LocalPosition: {x: 1.0793478, y: 0.51, z: -7.816668}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
@@ -320,7 +320,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.8
+  m_Radius: 1.97
   m_Center: {x: 0, y: 0.8, z: 0}
 --- !u!136 &13600000
 CapsuleCollider:
