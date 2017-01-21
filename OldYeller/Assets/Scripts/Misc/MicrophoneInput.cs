@@ -17,8 +17,7 @@ public class MicrophoneInput : MonoBehaviour
         _clipRecord = Microphone.Start(_device, true, 999, 44100);
     }
 
-    void StopMicrophone()
-    {
+    void StopMicrophone() {
         Microphone.End(_device);
     }
 
