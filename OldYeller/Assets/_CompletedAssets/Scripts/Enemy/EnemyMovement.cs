@@ -40,6 +40,7 @@ namespace CompleteProject
             {
                 if(!inContact)
                 {
+                    EnableLightSource();
                     this.GetComponent<Movement>().enabled = false;
                     GameObject go = GameObject.FindWithTag("Player");
                     go.GetComponent<PlayerMovement>().UpdateScore();
@@ -70,8 +71,18 @@ namespace CompleteProject
                 }
             }
 
-          
-           
+        }
+
+        void EnableLightSource() {
+            foreach (Transform child in transform)
+            {
+                if (child.tag == "NurseGlow")
+                {
+                    // the code here is called 
+                    // for each child named Bone
+                    child.gameObject.SetActive(true);
+                }
+            }
         }
     }
 }
