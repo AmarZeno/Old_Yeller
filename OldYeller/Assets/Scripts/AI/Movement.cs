@@ -30,6 +30,7 @@ public class Movement : MonoBehaviour {
 
             float move = moveSpeed * Time.deltaTime;
 
+            transform.LookAt(destination);
             transform.position = Vector3.MoveTowards(transform.position, destination, move);
 
             if(transform.position.x >= (origin.x + maxMoveDistance))
@@ -40,6 +41,7 @@ public class Movement : MonoBehaviour {
 
             float move = moveSpeed * Time.deltaTime;
 
+            transform.LookAt(destination);
             transform.position = Vector3.MoveTowards(transform.position, destination, move);
 
             if (transform.position.x <= (origin.x))
