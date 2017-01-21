@@ -34,9 +34,9 @@ namespace CompleteProject
         }
 
 
-        void OnCollisionEnter(Collision col)
+        void OnTriggerEnter(Collider other)
         {
-            if (col.gameObject.name == "Player")
+            if (other.gameObject.name == "Player")
             {
                 if(!inContact)
                 {
