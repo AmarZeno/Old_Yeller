@@ -5,31 +5,68 @@ namespace CompleteProject
 {
     public class EnemyMovement : MonoBehaviour
     {
-        private GameObject wayPoint;
+        private Transform player;
+        float moveSpeed = 3.0f;
+        float rotationSpeed = 3.0f;
+        float range = 10.0f;
+        float range2 = 10.0f;
+        float stop = 2;
+        Transform myTransform;
         private Vector3 wayPointPosition;
 
         private float speed = 6.0f;
 
         void Start()
         {
-
+            player = GameObject.FindWithTag("Player").transform;
         }
 
         void Awake ()
-        {
-            // Set up the references.
-            wayPoint = GameObject.Find("WayPoint");
+        {            
+            myTransform = transform;
         }
 
 
         void Update ()
         {
-            wayPointPosition = new Vector3(wayPoint.transform.position.x, transform.position.y, wayPoint.transform.position.z);
-            //Here, the zombie's will follow the waypoint.
-            if (wayPointPosition != transform.position)
-                transform.position = Vector3.MoveTowards(transform.position, wayPointPosition, speed * Time.deltaTime);
+            //float distance = Vector3.Distance(myTransform.position, player.position);
+            //if (distance <= range2 && distance >= range)
+            //{
+            //    myTransform.rotation = Quaternion.Slerp(myTransform.rotation,
+            //    Quaternion.LookRotation(player.position - myTransform.position), rotationSpeed * Time.deltaTime);
+            //}
+
+
+            //else if (distance <= range && distance > stop)
+            //{
+
+            //    //move towards the player
+            //    myTransform.rotation = Quaternion.Slerp(myTransform.rotation,
+            //    Quaternion.LookRotation(player.position - myTransform.position), rotationSpeed * Time.deltaTime);
+            //    myTransform.position += myTransform.forward * moveSpeed * Time.deltaTime;
+            //}
+            //else if (distance <= stop)
+            //{
+            //    myTransform.rotation = Quaternion.Slerp(myTransform.rotation,
+            //    Quaternion.LookRotation(player.position - myTransform.position), rotationSpeed * Time.deltaTime);
+            //}
+
+            float distance = Vector3.Distance(myTransform.position, player.position);
+
+            if(distance <= stop)
+            {
+                myTransform.rotation = Quaternion.Slerp(myTransform.rotation,
+                Quaternion.LookRotation(player.position - myTransform.position), rotationSpeed * Time.deltaTime);
+            }
             else
-                transform.position = transform.up;
+            {
+                myTransform.rotation = Quaternion.Slerp(myTransform.rotation,
+                Quaternion.LookRotation(player.position - myTransform.position), rotationSpeed * Time.deltaTime);
+
+                //move towards the player
+                myTransform.position += myTransform.forward * moveSpeed * Time.deltaTime;
+            }
+           
         }
     }
 }
