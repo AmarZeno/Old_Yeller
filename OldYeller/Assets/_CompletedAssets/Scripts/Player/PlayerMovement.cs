@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using UnitySampleAssets.CrossPlatformInput;
 
 namespace CompleteProject
@@ -7,6 +8,8 @@ namespace CompleteProject
     {
         public float speed = 6f;            // The speed that the player will move at.
 
+        static int score = 0;
+        Text scoreText;
 
         Vector3 movement;                   // The vector to store the direction of the player's movement.
         Animator anim;                      // Reference to the animator component.
@@ -22,7 +25,7 @@ namespace CompleteProject
             // Create a layer mask for the floor layer.
             floorMask = LayerMask.GetMask ("Floor");
 #endif
-
+            scoreText = GameObject.Find("ScoreText").GetComponent<Text>();
             // Set up references.
             anim = GetComponent <Animator> ();
             playerRigidbody = GetComponent <Rigidbody> ();
@@ -30,10 +33,7 @@ namespace CompleteProject
 
 
         void FixedUpdate ()
-        {
-
-
-           
+        {           
             // Store the input axes.
             float h = CrossPlatformInputManager.GetAxisRaw("Horizontal");
             float v = CrossPlatformInputManager.GetAxisRaw("Vertical");
@@ -62,7 +62,11 @@ namespace CompleteProject
         }
 
 
-       
+       public void UpdateScore()
+        {
+            score++;
+            scoreText.text = "Score: " + score;
+        }
 
         void Turning ()
         {
