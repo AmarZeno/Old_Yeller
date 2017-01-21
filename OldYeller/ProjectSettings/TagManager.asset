@@ -6,6 +6,10 @@ TagManager:
   tags:
   - Nurse
   - SpawnLocation
+  - Yeller
+  - ScoreText
+  - Enemy
+  - NurseGlow
   layers:
   - Default
   - TransparentFX

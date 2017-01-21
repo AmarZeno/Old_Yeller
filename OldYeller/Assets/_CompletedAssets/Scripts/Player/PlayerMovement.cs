@@ -46,6 +46,9 @@ namespace CompleteProject
 
             // Animate the player.
             Animating (h, v);
+
+            // Xbox one controller input
+            JoystickInput();
         }
 
 
@@ -121,6 +124,34 @@ namespace CompleteProject
 
             // Tell the animator whether or not the player is walking.
             anim.SetBool ("IsWalking", walking);
+        }
+
+        void JoystickInput() {
+            if (InputManager.MainHorizontal() < -0.5f)
+            {
+                transform.Translate(Vector3.back * Time.deltaTime * speed);
+            }
+            else if (InputManager.MainHorizontal() > 0.5f)
+            {
+                transform.Translate(Vector3.forward * Time.deltaTime * speed);
+            }
+            else
+            {
+
+            }
+
+            if (InputManager.MainVertical() < -0.5f)
+            {
+                transform.Translate(Vector3.left * Time.deltaTime * speed);
+            }
+            else if (InputManager.MainVertical() > 0.5f)
+            {
+                transform.Translate(Vector3.right * Time.deltaTime * speed);
+            }
+            else
+            {
+
+            }
         }
     }
 }

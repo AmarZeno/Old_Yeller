@@ -24,7 +24,6 @@ namespace CompleteProject
 
         void Start()
         {
-            
             player = GameObject.FindWithTag("Player").transform;
         }
 
