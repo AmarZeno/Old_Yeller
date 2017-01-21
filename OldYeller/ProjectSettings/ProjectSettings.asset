@@ -4,7 +4,11 @@
 PlayerSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 8
+<<<<<<< HEAD
   productGUID: 6da4423acbd8b744b8f06ff428705b4d
+=======
+  productGUID: fe15b71325744c04ea39fd4e5b01eebe
+>>>>>>> master
   AndroidProfiler: 0
   defaultScreenOrientation: 4
   targetDevice: 2
@@ -424,6 +428,10 @@ PlayerSettings:
   intPropertyNames:
   - Standalone::ScriptingBackend
   - WebPlayer::ScriptingBackend
+<<<<<<< HEAD
+=======
+  Android::ScriptingBackend: 0
+>>>>>>> master
   Standalone::ScriptingBackend: 0
   WebPlayer::ScriptingBackend: 0
   boolPropertyNames:
