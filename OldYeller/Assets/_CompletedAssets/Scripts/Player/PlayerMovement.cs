@@ -194,7 +194,7 @@ namespace CompleteProject
 
             if(timeTilShit >1.5f)
             {
-                SceneManager.LoadScene("StartScene");
+               // SceneManager.LoadScene("StartScene");
             }
         }
     }

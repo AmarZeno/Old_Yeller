@@ -65,7 +65,7 @@ public class ChangeLightIntensity : MonoBehaviour {
     }
 
     private void DecrementLightrange() {
-        lightComponent.range -= 1f;
+        lightComponent.range -= Mathf.Log(5f);
     }
 
     private float YellIntensity() {
