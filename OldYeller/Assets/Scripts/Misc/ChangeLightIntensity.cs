@@ -17,6 +17,7 @@ public class ChangeLightIntensity : MonoBehaviour {
     /*set the threshold value for yelling*/
     public float yellThreshold;    
     private MicrophoneInput mikeInput;  //get the reference of the mike script
+    //public GameObject Lightsphere;
 
     void Start() {
         currentTime = Time.deltaTime;
@@ -34,9 +35,12 @@ public class ChangeLightIntensity : MonoBehaviour {
         if(YellIntensity() > yellThreshold) {
             if (lightComponent.range < maxLightRange) {
                 IncrementLightRange();
+                //Lightsphere.SetActive(true);
+
             }
         } else {
             DecrementLightrange();
+            //Lightsphere.SetActive(false);
         }
 
         /*------------------------obsolete code NOW------------------------*/

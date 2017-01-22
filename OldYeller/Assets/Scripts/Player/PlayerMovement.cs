@@ -14,6 +14,7 @@ public class PlayerMovement : MonoBehaviour
     public float GameTime;
     float StartTime;
     public bool GameOver = false;
+    public bool shitHappened = false;
     public GameObject EndGameCanvas;
     public GameObject GameHUD;
 
@@ -369,6 +370,7 @@ public class PlayerMovement : MonoBehaviour
         {
             GameOver = true;
             GameHUD.SetActive(false);
+            shitHappened = true;
             EndGameCanvas.SetActive(true);
         }
     }
