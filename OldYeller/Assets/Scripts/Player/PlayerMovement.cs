@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using UnitySampleAssets.CrossPlatformInput;
 using UnityEngine.SceneManagement;
 using System.Collections;
 using System.Collections.Generic;
