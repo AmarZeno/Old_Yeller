@@ -4,13 +4,16 @@ using System.Collections.Generic;
 
 public class AISpawningScript : MonoBehaviour {
 
-    public List<GameObject> spawnPointsList;
+    public List<GameObject> peopleSpawnPoints;
+    public List<GameObject> nurseSpawnPoints;
+    public GameObject People;
     public GameObject Nurse;
+
     List<int> usedValues = new List<int>();
 
     // Constants
-    const int maxNursesCount = 4;
-
+    const int maxPeopleCount = 4;
+    const int maxNurseCount = 3;
     // Use this for initialization
     void Start () {
 
@@ -18,22 +21,52 @@ public class AISpawningScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        GameObject[] enemies;
-        enemies = GameObject.FindGameObjectsWithTag("Nurse");
+        TriggerPeople();
+        TriggerNurses();
+    }
 
-        if (enemies.Length >= maxNursesCount)
+
+    /* People spawn logic */
+    void TriggerPeople() {
+        GameObject[] peoples;
+        peoples = GameObject.FindGameObjectsWithTag("People");
+
+        if (peoples.Length >= maxPeopleCount)
+        {
+            // Prevent addition of new Peoples
+        }
+        else
+        {
+            InvokeRepeating("SpawnPeople", 0.2f, 5f);
+        }
+    }
+
+    void SpawnPeople() {
+        int SpawnPos = Random.Range(0, (peopleSpawnPoints.Count - 1));
+        Instantiate(People, peopleSpawnPoints[SpawnPos].transform.position, transform.rotation);
+        peopleSpawnPoints.RemoveAt(SpawnPos);
+        CancelInvoke();
+    }
+
+    /* Nurse spawn logic */
+    void TriggerNurses() {
+        GameObject[] Nurses;
+        Nurses = GameObject.FindGameObjectsWithTag("Nurse");
+
+        if (Nurses.Length >= maxNurseCount)
         {
             // Prevent addition of new nurses
         }
-        else {
-            InvokeRepeating("SpawnEnemies", 1, 5f);
+        else
+        {
+            InvokeRepeating("SpawnNurse", 0.2f, 2f);
         }
-	}
+    }
 
-    void SpawnEnemies() {
-        int SpawnPos = Random.Range(0, (spawnPointsList.Count - 1));
-        Instantiate(Nurse, spawnPointsList[SpawnPos].transform.position, transform.rotation);
-        spawnPointsList.RemoveAt(SpawnPos);
+    void SpawnNurse() {
+        int SpawnPos = Random.Range(0, (nurseSpawnPoints.Count - 1));
+        Instantiate(Nurse, nurseSpawnPoints[SpawnPos].transform.position, transform.rotation);
+        nurseSpawnPoints.RemoveAt(SpawnPos);
         CancelInvoke();
     }
 

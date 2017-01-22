@@ -18,7 +18,7 @@ namespace CompleteProject
 
         public Text scoreText;
         int score;
-        bool inContact = false;
+        public bool inContact = false;
 
         private float speed = 6.0f;
 
@@ -43,7 +43,7 @@ namespace CompleteProject
                     EnableLightSource();
                     this.GetComponent<Movement>().enabled = false;
                     GameObject go = GameObject.FindWithTag("Player");
-                    go.GetComponent<PlayerMovement>().UpdateScore();
+                    go.GetComponent<PlayerMovement>().IncreaseScore();
                 }
                 inContact = true;
                 

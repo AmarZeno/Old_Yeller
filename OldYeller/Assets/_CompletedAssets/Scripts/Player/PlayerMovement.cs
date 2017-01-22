@@ -65,9 +65,17 @@ namespace CompleteProject
         }
 
 
-       public void UpdateScore()
+       public void IncreaseScore()
+        { 
+                score++;
+            //score++;
+            scoreText.text = "Score: " + score;
+        }
+
+        public void DecreaseScore()
         {
-            score++;
+            score--;
+            //score++;
             scoreText.text = "Score: " + score;
         }
 
