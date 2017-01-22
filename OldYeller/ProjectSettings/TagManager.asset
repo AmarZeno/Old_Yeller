@@ -5,10 +5,11 @@ TagManager:
   serializedVersion: 2
   tags:
   - People
-  - Nurse
-  - SpawnLocation
   - NurseGlow
   - Yeller
+  - Nurse
+  - SpawnLocation
+  - ScoreText
   layers:
   - Default
   - TransparentFX

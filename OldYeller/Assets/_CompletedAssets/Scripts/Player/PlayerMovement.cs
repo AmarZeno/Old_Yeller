@@ -1,12 +1,18 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using UnitySampleAssets.CrossPlatformInput;
+using UnityEngine.SceneManagement;
 
 namespace CompleteProject
 {
     public class PlayerMovement : MonoBehaviour
     {
-        public float speed = 6f;            // The speed that the player will move at.
+        float controllerSpeed = 20;            // The controllerSpeed that the player will move at.
+        public bool playerMoving = false;
+        float timeStopped = 0;
+        public float yellThreshold;
+
+        private MicrophoneInput mikeInput;
 
         static int score = 0;
         Text scoreText;
@@ -29,26 +35,30 @@ namespace CompleteProject
             // Set up references.
             anim = GetComponent <Animator> ();
             playerRigidbody = GetComponent <Rigidbody> ();
+            mikeInput = GameObject.FindGameObjectWithTag("Yeller").GetComponent<MicrophoneInput>();
         }
 
 
         void FixedUpdate ()
         {           
             // Store the input axes.
-            float h = CrossPlatformInputManager.GetAxisRaw("Horizontal");
-            float v = CrossPlatformInputManager.GetAxisRaw("Vertical");
+            //float h = CrossPlatformInputManager.GetAxisRaw("Horizontal");
+            //float v = CrossPlatformInputManager.GetAxisRaw("Vertical");
 
             // Move the player around the scene.
-            Move (h, v);
+            //Move (h, v);
 
             // Turn the player to face the mouse cursor.
-            Turning ();
+            //Turning ();
 
             // Animate the player.
-            Animating (h, v);
+            //Animating (h, v);
 
             // Xbox one controller input
             JoystickInput();
+
+            CheckForShit();
+
         }
 
 
@@ -58,7 +68,7 @@ namespace CompleteProject
             movement.Set (h, 0f, v);
             
             // Normalise the movement vector and make it proportional to the speed per second.
-            movement = movement.normalized * speed * Time.deltaTime;
+            movement = movement.normalized * controllerSpeed * Time.deltaTime;
 
             // Move the player to it's current position plus the movement.
             playerRigidbody.MovePosition (transform.position + movement);
@@ -74,9 +84,11 @@ namespace CompleteProject
 
         public void DecreaseScore()
         {
+
             score--;
             //score++;
             scoreText.text = "Score: " + score;
+
         }
 
         void Turning ()
@@ -134,31 +146,55 @@ namespace CompleteProject
             anim.SetBool ("IsWalking", walking);
         }
 
-        void JoystickInput() {
-            if (InputManager.MainHorizontal() < -0.5f)
+        void JoystickInput()
+        {
+            if (InputManager.MainHorizontal() < -0.5f && transform.position.z > -25)
             {
-                transform.Translate(Vector3.back * Time.deltaTime * speed);
+                transform.Translate(Vector3.back * Time.deltaTime * controllerSpeed);
+                playerMoving = true;
+                timeStopped = Time.timeSinceLevelLoad;
             }
-            else if (InputManager.MainHorizontal() > 0.5f)
+            else if (InputManager.MainHorizontal() > 0.5f && transform.position.z < 25)
             {
-                transform.Translate(Vector3.forward * Time.deltaTime * speed);
-            }
-            else
-            {
-
-            }
-
-            if (InputManager.MainVertical() < -0.5f)
-            {
-                transform.Translate(Vector3.left * Time.deltaTime * speed);
-            }
-            else if (InputManager.MainVertical() > 0.5f)
-            {
-                transform.Translate(Vector3.right * Time.deltaTime * speed);
+                transform.Translate(Vector3.forward * Time.deltaTime * controllerSpeed);
+                playerMoving = true;
+                timeStopped = Time.timeSinceLevelLoad;
             }
             else
             {
+                playerMoving = false;
+            }
 
+            if (InputManager.MainVertical() < -0.5f && transform.position.x > -25)
+            {
+                transform.Translate(Vector3.left * Time.deltaTime * controllerSpeed);
+                playerMoving = true;
+                timeStopped = Time.timeSinceLevelLoad;
+            }
+            else if (InputManager.MainVertical() > 0.5f && transform.position.x < 25)
+            {
+                transform.Translate(Vector3.right * Time.deltaTime * controllerSpeed);
+                playerMoving = true;
+                timeStopped = Time.timeSinceLevelLoad;
+            }
+            else
+            {
+                playerMoving = false;
+            }
+        }
+
+        void CheckForShit()
+        {
+            float timeTilShit = 0;
+
+            if (mikeInput.MicLoudness > yellThreshold && playerMoving == false)
+            {
+                 timeTilShit = Time.timeSinceLevelLoad - timeStopped;
+            }
+
+            if(timeTilShit >1.5f)
+            {
+                SceneManager.LoadScene("StartScene");
             }
         }
     }

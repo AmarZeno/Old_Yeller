@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class YellStart : MonoBehaviour {
 
@@ -17,6 +18,6 @@ public class YellStart : MonoBehaviour {
     }
 
     private void ChangeScene() {
-        Application.LoadLevel("Basic");
+        SceneManager.LoadScene("CharacterSelect");
     }
 }

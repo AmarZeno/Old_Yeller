@@ -12,8 +12,10 @@ public class AISpawningScript : MonoBehaviour {
     List<int> usedValues = new List<int>();
 
     // Constants
-    const int maxPeopleCount = 4;
+
+    const int maxPeopleCount = 12;
     const int maxNurseCount = 3;
+
     // Use this for initialization
     void Start () {
 
