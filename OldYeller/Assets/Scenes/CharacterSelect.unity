@@ -793,6 +793,7 @@ MonoBehaviour:
   - {fileID: 1927546134}
   currentCharacterIndex: 0
   maxCharacterIndex: 0
+  mikeThreshold: 100
 --- !u!114 &1228507301
 MonoBehaviour:
   m_ObjectHideFlags: 0

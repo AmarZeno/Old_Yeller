@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class CreditsScene : MonoBehaviour {
 
     public void GoToCredts() {
-        Application.LoadLevel("Credits");
+        SceneManager.LoadScene("Credits");
     }
 }

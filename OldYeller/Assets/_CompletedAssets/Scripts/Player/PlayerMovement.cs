@@ -1,12 +1,18 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using UnitySampleAssets.CrossPlatformInput;
+using UnityEngine.SceneManagement;
 
 namespace CompleteProject
 {
     public class PlayerMovement : MonoBehaviour
     {
         float controllerSpeed = 20;            // The controllerSpeed that the player will move at.
+        public bool playerMoving = false;
+        float timeStopped = 0;
+        public float yellThreshold;
+
+        private MicrophoneInput mikeInput;
 
         static int score = 0;
         Text scoreText;
@@ -29,6 +35,7 @@ namespace CompleteProject
             // Set up references.
             anim = GetComponent <Animator> ();
             playerRigidbody = GetComponent <Rigidbody> ();
+            mikeInput = GameObject.FindGameObjectWithTag("Yeller").GetComponent<MicrophoneInput>();
         }
 
 
@@ -49,6 +56,9 @@ namespace CompleteProject
 
             // Xbox one controller input
             JoystickInput();
+
+            CheckForShit();
+
         }
 
 
@@ -131,27 +141,50 @@ namespace CompleteProject
             if (InputManager.MainHorizontal() < -0.5f && transform.position.z > -25)
             {
                 transform.Translate(Vector3.back * Time.deltaTime * controllerSpeed);
+                playerMoving = true;
+                timeStopped = Time.timeSinceLevelLoad;
             }
             else if (InputManager.MainHorizontal() > 0.5f && transform.position.z < 25)
             {
                 transform.Translate(Vector3.forward * Time.deltaTime * controllerSpeed);
+                playerMoving = true;
+                timeStopped = Time.timeSinceLevelLoad;
             }
             else
             {
-
+                playerMoving = false;
             }
 
             if (InputManager.MainVertical() < -0.5f && transform.position.x > -25)
             {
                 transform.Translate(Vector3.left * Time.deltaTime * controllerSpeed);
+                playerMoving = true;
+                timeStopped = Time.timeSinceLevelLoad;
             }
             else if (InputManager.MainVertical() > 0.5f && transform.position.x < 25)
             {
                 transform.Translate(Vector3.right * Time.deltaTime * controllerSpeed);
+                playerMoving = true;
+                timeStopped = Time.timeSinceLevelLoad;
             }
             else
             {
+                playerMoving = false;
+            }
+        }
 
+        void CheckForShit()
+        {
+            float timeTilShit = 0;
+
+            if (mikeInput.MicLoudness > yellThreshold && playerMoving == false)
+            {
+                 timeTilShit = Time.timeSinceLevelLoad - timeStopped;
+            }
+
+            if(timeTilShit >1.5f)
+            {
+                SceneManager.LoadScene("StartScene");
             }
         }
     }
