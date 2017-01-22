@@ -14,13 +14,14 @@ public class PlayerMovement : MonoBehaviour
     public float GameTime;
     float StartTime;
     public bool GameOver = false;
+    public bool shitHappened = false;
     public GameObject EndGameCanvas;
     public GameObject GameHUD;
 
     float h;
     float v;
 
-
+    public AudioSource Soundtrack;
     private MicrophoneInput mikeInput;
 
     public int score = 0;
@@ -367,8 +368,10 @@ public class PlayerMovement : MonoBehaviour
 
         if(timeTilShit >2.5f)
         {
+            Soundtrack.Stop();
             GameOver = true;
             GameHUD.SetActive(false);
+            shitHappened = true;
             EndGameCanvas.SetActive(true);
         }
     }
@@ -382,6 +385,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (GameTime > 15 && GameOver == false)
         {
+            
             GameOver = true;
             score = 0;
             GameHUD.SetActive(false);
