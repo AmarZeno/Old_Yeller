@@ -1,32 +1,48 @@
 fileFormatVersion: 2
-guid: 6e95e85da3066874980ae1db5ac0576c
-timeCreated: 1485110283
+guid: 202c441e7359b2643aad8e5bdb9ed98b
+timeCreated: 1485111611
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
-    100000: head
-    100002: left_hand
-    100004: left_leg
-    100006: mumu_mesh
-    100008: //RootNode
-    100010: right_hand
-    100012: right_leg
-    100014: root
-    400000: head
-    400002: left_hand
-    400004: left_leg
-    400006: mumu_mesh
-    400008: //RootNode
-    400010: right_hand
-    400012: right_leg
-    400014: root
-    4300000: mumu_mesh
+    100000: elbow_
+    100002: elbow_L
+    100004: foot
+    100006: foot_L
+    100008: hand_
+    100010: hand_L
+    100012: head
+    100014: hip
+    100016: hip_L
+    100018: knee
+    100020: knee_L
+    100022: //RootNode
+    100024: old_robe
+    100026: root
+    100028: shoulder
+    100030: shoulder_L
+    400000: elbow_
+    400002: elbow_L
+    400004: foot
+    400006: foot_L
+    400008: hand_
+    400010: hand_L
+    400012: head
+    400014: hip
+    400016: hip_L
+    400018: knee
+    400020: knee_L
+    400022: //RootNode
+    400024: old_robe
+    400026: root
+    400028: shoulder
+    400030: shoulder_L
+    4300000: old_robe
     7400000: Idle
     7400002: Walk
     7400004: Dump
     9500000: //RootNode
-    13700000: mumu_mesh
+    13700000: old_robe
   materials:
     importMaterials: 1
     materialName: 0
@@ -75,19 +91,35 @@ ModelImporter:
       transformMask:
       - path: 
         weight: 1
-      - path: mumu_mesh
+      - path: old_robe
         weight: 1
       - path: root
         weight: 1
       - path: root/head
         weight: 1
-      - path: root/left_hand
+      - path: root/hip
         weight: 1
-      - path: root/left_leg
+      - path: root/hip/knee
         weight: 1
-      - path: root/right_hand
+      - path: root/hip/knee/foot
         weight: 1
-      - path: root/right_leg
+      - path: root/hip_L
+        weight: 1
+      - path: root/hip_L/knee_L
+        weight: 1
+      - path: root/hip_L/knee_L/foot_L
+        weight: 1
+      - path: root/shoulder
+        weight: 1
+      - path: root/shoulder/elbow_
+        weight: 1
+      - path: root/shoulder/elbow_/hand_
+        weight: 1
+      - path: root/shoulder_L
+        weight: 1
+      - path: root/shoulder_L/elbow_L
+        weight: 1
+      - path: root/shoulder_L/elbow_L/hand_L
         weight: 1
       maskType: 0
       maskSource: {instanceID: 0}
@@ -119,19 +151,35 @@ ModelImporter:
       transformMask:
       - path: 
         weight: 1
-      - path: mumu_mesh
+      - path: old_robe
         weight: 1
       - path: root
         weight: 1
       - path: root/head
         weight: 1
-      - path: root/left_hand
+      - path: root/hip
         weight: 1
-      - path: root/left_leg
+      - path: root/hip/knee
         weight: 1
-      - path: root/right_hand
+      - path: root/hip/knee/foot
         weight: 1
-      - path: root/right_leg
+      - path: root/hip_L
+        weight: 1
+      - path: root/hip_L/knee_L
+        weight: 1
+      - path: root/hip_L/knee_L/foot_L
+        weight: 1
+      - path: root/shoulder
+        weight: 1
+      - path: root/shoulder/elbow_
+        weight: 1
+      - path: root/shoulder/elbow_/hand_
+        weight: 1
+      - path: root/shoulder_L
+        weight: 1
+      - path: root/shoulder_L/elbow_L
+        weight: 1
+      - path: root/shoulder_L/elbow_L/hand_L
         weight: 1
       maskType: 0
       maskSource: {instanceID: 0}
@@ -139,7 +187,7 @@ ModelImporter:
     - serializedVersion: 16
       name: Dump
       takeName: Take 001
-      firstFrame: 41
+      firstFrame: 40
       lastFrame: 60
       wrapMode: 0
       orientationOffsetY: 0
@@ -163,19 +211,35 @@ ModelImporter:
       transformMask:
       - path: 
         weight: 1
-      - path: mumu_mesh
+      - path: old_robe
         weight: 1
       - path: root
         weight: 1
       - path: root/head
         weight: 1
-      - path: root/left_hand
+      - path: root/hip
         weight: 1
-      - path: root/left_leg
+      - path: root/hip/knee
         weight: 1
-      - path: root/right_hand
+      - path: root/hip/knee/foot
         weight: 1
-      - path: root/right_leg
+      - path: root/hip_L
+        weight: 1
+      - path: root/hip_L/knee_L
+        weight: 1
+      - path: root/hip_L/knee_L/foot_L
+        weight: 1
+      - path: root/shoulder
+        weight: 1
+      - path: root/shoulder/elbow_
+        weight: 1
+      - path: root/shoulder/elbow_/hand_
+        weight: 1
+      - path: root/shoulder_L
+        weight: 1
+      - path: root/shoulder_L/elbow_L
+        weight: 1
+      - path: root/shoulder_L/elbow_L/hand_L
         weight: 1
       maskType: 0
       maskSource: {instanceID: 0}

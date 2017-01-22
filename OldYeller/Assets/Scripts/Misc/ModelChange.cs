@@ -8,8 +8,8 @@ public class ModelChange : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        //selectedCharacterIndex = PlayerPrefs.GetInt("characters");
-        selectedCharacterIndex = 2;
+        selectedCharacterIndex = PlayerPrefs.GetInt("characters");
+        selectedCharacterIndex = 1;
         if (selectedCharacterIndex != -1)
         {
             listOfCharacters[selectedCharacterIndex].SetActive(true);

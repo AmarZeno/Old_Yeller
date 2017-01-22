@@ -7,7 +7,7 @@ using CompleteProject;
 
 public class PlayerMovement : MonoBehaviour
 {
-    float controllerSpeed = 20;            // The controllerSpeed that the player will move at.
+    float controllerSpeed = 10;            // The controllerSpeed that the player will move at.
     public bool playerMoving = false;
     float timeStopped = 10000;
     public float yellThreshold;
