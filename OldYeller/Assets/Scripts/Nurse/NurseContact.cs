@@ -52,10 +52,11 @@ public class NurseContact : MonoBehaviour {
                 for (int j = 0; j <= (int)(listOfFollowingPeople.Count / 2); j++)
                 {
                     (listOfFollowingPeople[j] as GameObject).GetComponent<EnemyMovement>().inContact = false;
-                    (listOfFollowingPeople[j] as GameObject).GetComponent<Movement>().enabled = true;
-                    GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>().DecreaseScore();
+                    (listOfFollowingPeople[j] as GameObject).GetComponent<Movement>().enabled = true;                   
                     listOfFollowingPeople.RemoveAt(j);
                 }
+                GameObject go = GameObject.FindWithTag("Player");
+                go.GetComponentInParent<PlayerMovement>().UpdateScore();
             }
         }
     }
