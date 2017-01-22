@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using UnitySampleAssets.CrossPlatformInput;
 using UnityEngine.SceneManagement;
 using System.Collections;
 using System.Collections.Generic;
@@ -64,8 +63,8 @@ public class PlayerMovement : MonoBehaviour
     void FixedUpdate ()
     {           
         // Store the input axes.
-        //float h = CrossPlatformInputManager.GetAxisRaw("Horizontal");
-        //float v = CrossPlatformInputManager.GetAxisRaw("Vertical");
+       // float h = CrossPlatformInputManager.GetAxisRaw("Horizontal");
+       // float v = CrossPlatformInputManager.GetAxisRaw("Vertical");
 
         // Move the player around the scene.
         
@@ -304,7 +303,7 @@ public class PlayerMovement : MonoBehaviour
             CheckForYell();
             h = InputManager.MainHorizontal();
             timeStopped = Time.timeSinceLevelLoad;
-
+            
         }
         else if (InputManager.MainHorizontal() > 0.5f && transform.position.z < 25)
         {
@@ -326,7 +325,7 @@ public class PlayerMovement : MonoBehaviour
             //transform.Translate(Vector3.left * Time.deltaTime * controllerSpeed);
             playerMoving = true;
             CheckForYell();
-            v = -(InputManager.MainVertical());
+            v = InputManager.MainVertical();
             timeStopped = Time.timeSinceLevelLoad;
         }
         else if (InputManager.MainVertical() > 0.5f && transform.position.x < 25)
@@ -334,7 +333,7 @@ public class PlayerMovement : MonoBehaviour
             //transform.Translate(Vector3.right * Time.deltaTime * controllerSpeed);
             playerMoving = true;
             CheckForYell();
-            v = -(InputManager.MainVertical());
+            v = InputManager.MainVertical();
             timeStopped = Time.timeSinceLevelLoad;
         }
         else
