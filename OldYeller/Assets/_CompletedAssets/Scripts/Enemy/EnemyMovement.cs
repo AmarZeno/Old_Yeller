@@ -40,7 +40,7 @@ namespace CompleteProject
             {
                 if(!inContact)
                 {
-                    EnableLightSource();
+                    //EnableLightSource();
                     this.GetComponent<Movement>().enabled = false;
                     GameObject go = GameObject.FindWithTag("Player");
                     go.GetComponent<PlayerMovement>().UpdateScore();

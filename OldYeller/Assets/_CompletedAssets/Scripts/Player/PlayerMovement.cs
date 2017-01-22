@@ -128,11 +128,11 @@ namespace CompleteProject
 
         void JoystickInput()
         {
-            if (InputManager.MainHorizontal() < -0.5f)
+            if (InputManager.MainHorizontal() < -0.5f && transform.position.z > -25)
             {
                 transform.Translate(Vector3.back * Time.deltaTime * controllerSpeed);
             }
-            else if (InputManager.MainHorizontal() > 0.5f)
+            else if (InputManager.MainHorizontal() > 0.5f && transform.position.z < 25)
             {
                 transform.Translate(Vector3.forward * Time.deltaTime * controllerSpeed);
             }
@@ -141,11 +141,11 @@ namespace CompleteProject
 
             }
 
-            if (InputManager.MainVertical() < -0.5f)
+            if (InputManager.MainVertical() < -0.5f && transform.position.x > -25)
             {
                 transform.Translate(Vector3.left * Time.deltaTime * controllerSpeed);
             }
-            else if (InputManager.MainVertical() > 0.5f)
+            else if (InputManager.MainVertical() > 0.5f && transform.position.x < 25)
             {
                 transform.Translate(Vector3.right * Time.deltaTime * controllerSpeed);
             }
