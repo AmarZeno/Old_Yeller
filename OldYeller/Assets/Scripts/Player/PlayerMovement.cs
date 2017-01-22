@@ -2,6 +2,9 @@
 using UnityEngine.UI;
 using UnitySampleAssets.CrossPlatformInput;
 using UnityEngine.SceneManagement;
+using System.Collections;
+using System.Collections.Generic;
+using CompleteProject;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -14,6 +17,9 @@ public class PlayerMovement : MonoBehaviour
     public bool GameOver = false;
     public GameObject EndGameCanvas;
     public GameObject GameHUD;
+
+    float h;
+    float v;
 
 
     private MicrophoneInput mikeInput;
@@ -29,6 +35,9 @@ public class PlayerMovement : MonoBehaviour
     int floorMask;                      // A layer mask so that a ray can be cast just at gameobjects on the floor layer.
     float camRayLength = 100f;          // The length of the ray from the camera into the scene.
 #endif
+
+    public Animator animator;
+    public Vector3 lastPosition;
 
     void Awake ()
     {
@@ -54,7 +63,7 @@ public class PlayerMovement : MonoBehaviour
         //float v = CrossPlatformInputManager.GetAxisRaw("Vertical");
 
         // Move the player around the scene.
-        //Move (h, v);
+        
 
         // Turn the player to face the mouse cursor.
         //Turning ();
@@ -64,6 +73,8 @@ public class PlayerMovement : MonoBehaviour
 
         // Xbox one controller input
         JoystickInput();
+        Move (h, v);
+        LookTowardsDirection(h, v);
 
         CheckForShit();
 
@@ -89,6 +100,29 @@ public class PlayerMovement : MonoBehaviour
         score++;
         //score++;
         scoreText.text = "Score: " + score;
+    }
+
+
+    public void UpdateScore()
+    {
+        ArrayList totalPeople = new ArrayList();
+        List<GameObject> listOfFollowingPeople = new List<GameObject>();
+
+        totalPeople.AddRange(GameObject.FindGameObjectsWithTag("People"));
+
+        foreach (GameObject person in totalPeople)
+        {
+            if (person.GetComponent<EnemyMovement>().inContact == true)
+            {
+                if (!listOfFollowingPeople.Contains(person))
+                    listOfFollowingPeople.Add(person);
+
+            }
+        }
+
+        scoreText.text = "Score: " + listOfFollowingPeople.Count;
+        score = listOfFollowingPeople.Count;
+
     }
 
     public void DecreaseScore()
@@ -146,53 +180,158 @@ public class PlayerMovement : MonoBehaviour
     }
 
 
-    void Animating (float h, float v)
+    public void LookTowardsDirection(float horizontal, float vertical)
     {
-        // Create a boolean that is true if either of the input axes is non-zero.
-        bool walking = h != 0f || v != 0f;
+        Debug.Log("Horizontal: " + horizontal + " Vertical: " + vertical);
+        //var direction = transform.position - lastPosition;
+        //var localDirection = transform.InverseTransformDirection(direction);
+        //lastPosition = transform.position;
+        //// transform.LookAt(localDirection);
 
-        // Tell the animator whether or not the player is walking.
-        anim.SetBool ("IsWalking", walking);
+
+
+        //if (localDirection != Vector3.zero)
+        //{
+        //    Quaternion newRotation = Quaternion.LookRotation(localDirection);
+
+        //    playerRigidbody.MoveRotation(newRotation);
+        //}
+
+        if (vertical > 0)
+        {
+
+            if (horizontal > 0)
+            {
+                // I quadrant
+                Quaternion newRotation = Quaternion.LookRotation(new Vector3(1f, 0f, 1f));
+                playerRigidbody.MoveRotation(newRotation);
+            }
+            else if (horizontal < 0)
+            {
+                // II quadrant
+                Quaternion newRotation = Quaternion.LookRotation(new Vector3(-1f, 0f, 1f));
+                playerRigidbody.MoveRotation(newRotation);
+            }
+            else
+            {
+                // transform.forward = new Vector3(0f, 0f, 1f);
+                Quaternion newRotation = Quaternion.LookRotation(new Vector3(0f, 0f, 1f));
+                playerRigidbody.MoveRotation(newRotation);
+            }
+        }
+        else if (vertical < 0)
+        {
+            if (horizontal > 0)
+            {
+                // IV quadrant
+                Quaternion newRotation = Quaternion.LookRotation(new Vector3(1f, 0f, -1f));
+                playerRigidbody.MoveRotation(newRotation);
+            }
+            else if (horizontal < 0)
+            {
+                // III quadrant
+                Quaternion newRotation = Quaternion.LookRotation(new Vector3(-1f, 0f, -1f));
+                playerRigidbody.MoveRotation(newRotation);
+            }
+            else
+            {
+                // transform.forward = new Vector3(0f, 0f, -1f);
+                Quaternion newRotation = Quaternion.LookRotation(new Vector3(0f, 0f, -1f));
+                playerRigidbody.MoveRotation(newRotation);
+            }
+        }
+        else if (horizontal > 0)
+        {
+            if (vertical > 0)
+            {
+                // I quadrant
+                transform.forward = new Vector3(1f, 0f, 1f);
+            }
+            else if (vertical < 0)
+            {
+                // II quadrant
+                transform.forward = new Vector3(-1f, 0f, 1f);
+            }
+            else
+            {
+                transform.forward = new Vector3(1f, 0f, 0f);
+            }
+        }
+        else if (horizontal < 0)
+        {
+            if (vertical > 0)
+            {
+                // IV quadrant
+                transform.forward = new Vector3(1f, 0f, -1f);
+            }
+            else if (vertical < 0)
+            {
+                // III quadrant
+                transform.forward = new Vector3(-1f, 0f, -1f);
+            }
+            else
+            {
+                transform.forward = new Vector3(-1f, 0f, 0f);
+            }
+        }
+
+        AnimateCharacter(horizontal, vertical);
+    }
+
+    public void AnimateCharacter(float horizontal, float vertical)
+    {
+        if (horizontal != 0 || vertical != 0)
+        {
+            animator.SetBool("isWalking", true);
+        }
+        else
+        {
+            animator.SetBool("isWalking", false);
+        }
     }
 
     void JoystickInput()
     {
         if (InputManager.MainHorizontal() < -0.5f && transform.position.z > -25)
         {
-            transform.Translate(Vector3.back * Time.deltaTime * controllerSpeed);
+            //transform.Translate(Vector3.back * Time.deltaTime * controllerSpeed);
             playerMoving = true;
             CheckForYell();
-
+            h = InputManager.MainHorizontal();
 
         }
         else if (InputManager.MainHorizontal() > 0.5f && transform.position.z < 25)
         {
-            transform.Translate(Vector3.forward * Time.deltaTime * controllerSpeed);
+            //transform.Translate(Vector3.forward * Time.deltaTime * controllerSpeed);
             playerMoving = true;
             CheckForYell();
-
+            h = InputManager.MainHorizontal();
 
         }
         else
         {
             playerMoving = false;
+            h = 0;
         }
 
         if (InputManager.MainVertical() < -0.5f && transform.position.x > -25)
         {
-            transform.Translate(Vector3.left * Time.deltaTime * controllerSpeed);
+            //transform.Translate(Vector3.left * Time.deltaTime * controllerSpeed);
             playerMoving = true;
             CheckForYell();
+            v = -(InputManager.MainVertical());
         }
         else if (InputManager.MainVertical() > 0.5f && transform.position.x < 25)
         {
-            transform.Translate(Vector3.right * Time.deltaTime * controllerSpeed);
+            //transform.Translate(Vector3.right * Time.deltaTime * controllerSpeed);
             playerMoving = true;
             CheckForYell();
+            v = -(InputManager.MainVertical());
         }
         else
         {
             playerMoving = false;
+            v = 0;
         }
     }
 

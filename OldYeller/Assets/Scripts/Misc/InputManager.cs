@@ -9,7 +9,7 @@ public static class InputManager
     {
         float r = 0.0f;
         r += Input.GetAxis("J_MainHorizontal");
-        //r += Input.GetAxis("K_MainHorizontal");
+        r += Input.GetAxis("K_MainHorizontal");
         return Mathf.Clamp(r, -1.0f, 1.0f);
     }
 
@@ -17,7 +17,7 @@ public static class InputManager
     {
         float r = 0.0f;
         r += Input.GetAxis("J_MainVertical");
-        //r += Input.GetAxis("K_MainVertical");
+        r += Input.GetAxis("K_MainVertical");
         return Mathf.Clamp(r, -1.0f, 1.0f);
     }
 
