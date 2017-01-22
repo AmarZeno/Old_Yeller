@@ -44,6 +44,7 @@ public class AISpawningScript : MonoBehaviour {
     }
 
     void SpawnPeople() {
+        People = gameObject.GetComponent<ModelChange>().charactersToPopulate[Random.Range(0, gameObject.GetComponent<ModelChange>().charactersToPopulate.Count)];
         int SpawnPos = Random.Range(0, (peopleSpawnPoints.Count - 1));
         Instantiate(People, peopleSpawnPoints[SpawnPos].transform.position, transform.rotation);
         peopleSpawnPoints.RemoveAt(SpawnPos);
