@@ -50,9 +50,14 @@ public class PlayerMovement : MonoBehaviour
         anim = GetComponent <Animator> ();
         playerRigidbody = GetComponent <Rigidbody> ();
         mikeInput = GameObject.FindGameObjectWithTag("Yeller").GetComponent<MicrophoneInput>();
-        StartTime = Time.timeSinceLevelLoad;
+        
         timeText = GameObject.Find("TimeText").GetComponent<Text>();
 
+    }
+
+    void Start()
+    {
+        StartTime = Time.timeSinceLevelLoad;
     }
 
 
@@ -298,6 +303,7 @@ public class PlayerMovement : MonoBehaviour
             playerMoving = true;
             CheckForYell();
             h = InputManager.MainHorizontal();
+            timeStopped = Time.timeSinceLevelLoad;
 
         }
         else if (InputManager.MainHorizontal() > 0.5f && transform.position.z < 25)
@@ -306,6 +312,7 @@ public class PlayerMovement : MonoBehaviour
             playerMoving = true;
             CheckForYell();
             h = InputManager.MainHorizontal();
+            timeStopped = Time.timeSinceLevelLoad;
 
         }
         else
@@ -320,6 +327,7 @@ public class PlayerMovement : MonoBehaviour
             playerMoving = true;
             CheckForYell();
             v = -(InputManager.MainVertical());
+            timeStopped = Time.timeSinceLevelLoad;
         }
         else if (InputManager.MainVertical() > 0.5f && transform.position.x < 25)
         {
@@ -327,6 +335,7 @@ public class PlayerMovement : MonoBehaviour
             playerMoving = true;
             CheckForYell();
             v = -(InputManager.MainVertical());
+            timeStopped = Time.timeSinceLevelLoad;
         }
         else
         {
