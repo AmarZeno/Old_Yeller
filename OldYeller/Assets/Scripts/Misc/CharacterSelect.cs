@@ -25,7 +25,7 @@ public class CharacterSelect : MonoBehaviour
 
         if (mikeInput.MicLoudness > mikeThreshold && Time.timeSinceLevelLoad > 1) {
             PlayerPrefs.SetInt("characters", currentCharacterIndex);
-            SceneManager.LoadScene("SpawnMerge");
+            SceneManager.LoadScene("SpawnMerge 1");
         }
 
         if (InputManager.MainHorizontal() < -0.5f && transform.position.z > -25)

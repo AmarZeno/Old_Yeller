@@ -17,3 +17,5 @@ EditorBuildSettings:
     path: Assets/Scenes/CharacterSelect.unity
   - enabled: 1
     path: Assets/Scenes/SpawnMerge.unity
+  - enabled: 1
+    path: Assets/Scenes/SpawnMerge 1.unity

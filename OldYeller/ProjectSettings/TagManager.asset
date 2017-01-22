@@ -10,6 +10,9 @@ TagManager:
   - Nurse
   - SpawnLocation
   - ScoreText
+  - TimeText
+  - EndGameCanvas
+  - GameHUD
   layers:
   - Default
   - TransparentFX
