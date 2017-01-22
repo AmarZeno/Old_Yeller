@@ -9,6 +9,8 @@ public class EndSceneManager : MonoBehaviour {
     Text Stats;
     Text WinLose;
     private PlayerMovement playermove;
+    public AudioSource Boos;
+    public AudioSource Hooray;
 
     // Use this for initialization
     void Start () {
@@ -21,6 +23,7 @@ public class EndSceneManager : MonoBehaviour {
         if(playermove.shitHappened)
         {
             WinLose.text = "YOU WIN!";
+            Hooray.Play();
             if (playermove.score == 0)
             {
                 Results.text = "Nobody saw you shit? That's just a normal shit";
@@ -45,6 +48,7 @@ public class EndSceneManager : MonoBehaviour {
         }
         else
         {
+            Boos.Play();
             WinLose.text = "YOU LOSE!";
             Results.text = "Why bother playing if you weren't going to shit?";
             Stats.text = "Viewers: 0 Time: 15.0" ;
