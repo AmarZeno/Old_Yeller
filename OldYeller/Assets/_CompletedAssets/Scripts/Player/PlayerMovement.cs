@@ -2,12 +2,14 @@
 using UnityEngine.UI;
 using UnitySampleAssets.CrossPlatformInput;
 using UnityEngine.SceneManagement;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace CompleteProject
 {
     public class PlayerMovement : MonoBehaviour
     {
-        float controllerSpeed = 20;            // The controllerSpeed that the player will move at.
+        float controllerSpeed = 10;            // The controllerSpeed that the player will move at.
         public bool playerMoving = false;
         float timeStopped = 0;
         public float yellThreshold;
@@ -25,6 +27,11 @@ namespace CompleteProject
         float camRayLength = 100f;          // The length of the ray from the camera into the scene.
 #endif
 
+
+        public Animator animator;
+
+        public Vector3 lastPosition;
+
         void Awake ()
         {
 #if !MOBILE_INPUT
@@ -40,13 +47,13 @@ namespace CompleteProject
 
 
         void FixedUpdate ()
-        {           
+        {
             // Store the input axes.
-            //float h = CrossPlatformInputManager.GetAxisRaw("Horizontal");
-            //float v = CrossPlatformInputManager.GetAxisRaw("Vertical");
+            float h = CrossPlatformInputManager.GetAxisRaw("Horizontal");
+            float v = CrossPlatformInputManager.GetAxisRaw("Vertical");
 
             // Move the player around the scene.
-            //Move (h, v);
+            Move (h, v);
 
             // Turn the player to face the mouse cursor.
             //Turning ();
@@ -57,7 +64,9 @@ namespace CompleteProject
             // Xbox one controller input
             JoystickInput();
 
-            CheckForShit();
+            LookTowardsDirection(h, v);
+
+            CheckForShit();           
 
         }
 
@@ -74,12 +83,136 @@ namespace CompleteProject
             playerRigidbody.MovePosition (transform.position + movement);
         }
 
+        public void LookTowardsDirection(float horizontal, float vertical) {
+            Debug.Log("Horizontal: "+horizontal+" Vertical: "+ vertical);
+            //var direction = transform.position - lastPosition;
+            //var localDirection = transform.InverseTransformDirection(direction);
+            //lastPosition = transform.position;
+            //// transform.LookAt(localDirection);
+
+
+
+            //if (localDirection != Vector3.zero)
+            //{
+            //    Quaternion newRotation = Quaternion.LookRotation(localDirection);
+
+            //    playerRigidbody.MoveRotation(newRotation);
+            //}
+
+            if (vertical > 0)
+            {
+
+                if (horizontal > 0)
+                {
+                    // I quadrant
+                    Quaternion newRotation = Quaternion.LookRotation(new Vector3(1f, 0f, 1f));
+                    playerRigidbody.MoveRotation(newRotation);
+                }
+                else if (horizontal < 0)
+                {
+                    // II quadrant
+                    Quaternion newRotation = Quaternion.LookRotation(new Vector3(-1f, 0f, 1f));
+                    playerRigidbody.MoveRotation(newRotation);
+                }
+                else
+                {
+                    // transform.forward = new Vector3(0f, 0f, 1f);
+                    Quaternion newRotation = Quaternion.LookRotation(new Vector3(0f, 0f, 1f));
+                    playerRigidbody.MoveRotation(newRotation);
+                }
+            }
+            else if (vertical < 0)
+            {
+                if (horizontal > 0)
+                {
+                    // IV quadrant
+                    Quaternion newRotation = Quaternion.LookRotation(new Vector3(1f, 0f, -1f));
+                    playerRigidbody.MoveRotation(newRotation);
+                }
+                else if (horizontal < 0)
+                {
+                    // III quadrant
+                    Quaternion newRotation = Quaternion.LookRotation(new Vector3(-1f, 0f, -1f));
+                    playerRigidbody.MoveRotation(newRotation);
+                }
+                else
+                {
+                    // transform.forward = new Vector3(0f, 0f, -1f);
+                    Quaternion newRotation = Quaternion.LookRotation(new Vector3(0f, 0f, -1f));
+                    playerRigidbody.MoveRotation(newRotation);
+                }
+            }
+            else if (horizontal > 0)
+            {
+                if (vertical > 0)
+                {
+                    // I quadrant
+                    transform.forward = new Vector3(1f, 0f, 1f);
+                }
+                else if (vertical < 0)
+                {
+                    // II quadrant
+                    transform.forward = new Vector3(-1f, 0f, 1f);
+                }
+                else
+                {
+                    transform.forward = new Vector3(1f, 0f, 0f);
+                }
+            }
+            else if (horizontal < 0)
+            {
+                if (vertical > 0)
+                {
+                    // IV quadrant
+                    transform.forward = new Vector3(1f, 0f,- 1f);
+                }
+                else if (vertical < 0)
+                {
+                    // III quadrant
+                    transform.forward = new Vector3(-1f, 0f, -1f);
+                }
+                else
+                {
+                    transform.forward = new Vector3(-1f, 0f, 0f);
+                }
+            }
+
+            AnimateCharacter(horizontal, vertical);
+        }
+
+        public void AnimateCharacter(float horizontal, float vertical) {
+            if (horizontal != 0 || vertical != 0) {
+                animator.SetBool("isWalking", true);
+            } else {
+                animator.SetBool("isWalking", false);
+            }
+        }
 
        public void IncreaseScore()
         { 
-                score++;
+            score++;
             //score++;
             scoreText.text = "Score: " + score;
+        }
+
+        public void UpdateScore() {
+            ArrayList totalPeople = new ArrayList();
+            List<GameObject> listOfFollowingPeople = new List<GameObject>();
+
+            totalPeople.AddRange(GameObject.FindGameObjectsWithTag("People"));
+
+            foreach (GameObject person in totalPeople)
+            {
+                if (person.GetComponent<EnemyMovement>().inContact == true)
+                {
+                    if (!listOfFollowingPeople.Contains(person))
+                        listOfFollowingPeople.Add(person);
+
+                }
+            }
+
+            scoreText.text = "Score: " + listOfFollowingPeople.Count;
+
         }
 
         public void DecreaseScore()
@@ -150,9 +283,11 @@ namespace CompleteProject
         {
             if (InputManager.MainHorizontal() < -0.5f && transform.position.z > -25)
             {
+
                 transform.Translate(Vector3.back * Time.deltaTime * controllerSpeed);
                 playerMoving = true;
                 timeStopped = Time.timeSinceLevelLoad;
+
             }
             else if (InputManager.MainHorizontal() > 0.5f && transform.position.z < 25)
             {

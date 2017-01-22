@@ -12,7 +12,7 @@ namespace CompleteProject
         float rotationSpeed = 3.0f;
         float range = 10.0f;
         float range2 = 10.0f;
-        float stop = 2;
+        float stop = 4;
         Transform myTransform;
         private Vector3 wayPointPosition;
 
@@ -36,17 +36,18 @@ namespace CompleteProject
 
         void OnTriggerEnter(Collider other)
         {
-            if (other.gameObject.name == "Player")
+            if (other.gameObject.tag == "Player")
             {
                 if(!inContact)
                 {
                     //EnableLightSource();
                     this.GetComponent<Movement>().enabled = false;
-                    GameObject go = GameObject.FindWithTag("Player");
-                    go.GetComponent<PlayerMovement>().IncreaseScore();
+                   
+                    
                 }
                 inContact = true;
-                
+                GameObject go = GameObject.FindWithTag("Player");
+                go.GetComponentInParent<PlayerMovement>().UpdateScore();
             }
         }
 
@@ -54,17 +55,17 @@ namespace CompleteProject
         {
             if(inContact)
             {
-                float distance = Vector3.Distance(myTransform.position, player.position);
+                float distance = Vector3.Distance(myTransform.position, player.parent.position);
 
                 if (distance <= stop)
                 {
                     myTransform.rotation = Quaternion.Slerp(myTransform.rotation,
-                    Quaternion.LookRotation(player.position - myTransform.position), rotationSpeed * Time.deltaTime);
+                    Quaternion.LookRotation(player.parent.position - myTransform.position), rotationSpeed * Time.deltaTime);
                 }
                 else
                 {
                     myTransform.rotation = Quaternion.Slerp(myTransform.rotation,
-                    Quaternion.LookRotation(player.position - myTransform.position), rotationSpeed * Time.deltaTime);
+                    Quaternion.LookRotation(player.parent.position - myTransform.position), rotationSpeed * Time.deltaTime);
 
                     //move towards the player
                     myTransform.position += myTransform.forward * moveSpeed * Time.deltaTime;
